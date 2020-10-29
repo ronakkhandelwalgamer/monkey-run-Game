@@ -8,7 +8,8 @@ var ground, invisibleground, groundImage;
 var bananaGroup, bananaImg;
 var obstacleGroup,obstacleImg;
 
-var Surviveltime;
+var surviveltime;
+var score;
 
 
 function preload(){
@@ -22,7 +23,7 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(600,200);
+  createCanvas(800 ,200);
    
   monkey = createSprite(50,height-25,20,50);
   monkey.addAnimation("moving", monkey_running);
@@ -40,12 +41,17 @@ function setup() {
 obstacleGroup=new Group();
   bananaGroup=new Group();
   
- var surviveltime = 0;
-  
-  storke("white");
-  textSize(20);
+ surviveltime = 0;
+  score=0;
+  stroke("white");
+  textSize(15);
   fill("white");
+ 
   
+  stroke("black");
+  textSize(15);
+  fill("black");
+ 
   
 }
 
@@ -53,7 +59,7 @@ function draw() {
   
   background(180);
   //displaying score
-  text("Surviveltime: "+ Surviveltime, 500,50);
+  text("Surviveltime: "+ surviveltime, 180,80);
   //console.log(monkey.y);
    monkey.collide(invisibleGround);
   
@@ -68,11 +74,16 @@ function draw() {
     //add gravity
     monkey.velocityY = monkey.velocityY + 0.6
     
+     text("Score:"+score,500,50);
     if (ground.x < 0){
       ground.x = ground.width/2;
     }
      spawnBananas();
     spawnObstacles();
+    
+     surviveltime=Math.ceil(frameCount/getFrameRate())
+ // text("survivel time:"+surviveltime,180,80);
+  
     
     //spawn obstacles on the ground
     
@@ -84,7 +95,7 @@ function draw() {
       
           if(bananaGroup.isTouching(monkey)){
    bananaGroup.destroyEach();
-   Surviveltime=Surviveltime+5;
+   score=score +5;
  }
 
 
